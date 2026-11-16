@@ -1,0 +1,27 @@
+@model List<Room>
+@{
+    bool canManage = (await Authz.AuthorizeAsync(User, "CanManageRooms")).Succeeded;
+}
+
+<h1>Rooms</h1>
+<p>@ViewBag.Count rooms</p>
+
+@if (canManage)
+{
+    <p><a class="btn btn-primary" asp-controller="Rooms" asp-action="Add">Add a room</a></p>
+}
+
+<table class="table">
+    <tr>
+        <th>Code</th>
+        <th>Name</th>
+        <th>Building</th>
+        <th>Seats</th>
+        <th>Projector</th>
+        <th></th>
+    </tr>
+    @foreach (Room each_room in Model)
+    {
+        <partial name="_RoomRow" model="each_room" />
+    }
+</table>

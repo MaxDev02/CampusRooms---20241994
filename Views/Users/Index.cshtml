@@ -1,0 +1,28 @@
+@model List<UserRow>
+
+<h1>Users</h1>
+
+<table class="table">
+    <tr>
+        <th>Email</th>
+        <th></th>
+    </tr>
+    @foreach (UserRow each_user in Model)
+    {
+        <tr>
+            <td>@each_user.Email</td>
+            <td>
+                @if (each_user.IsStaff)
+                {
+                    <span class="badge bg-primary">Staff</span>
+                }
+                else
+                {
+                    <form method="post" asp-controller="Users" asp-action="MakeStaff" asp-route-id="@each_user.Id">
+                        <button type="submit" class="btn btn-sm btn-outline-primary">Make staff</button>
+                    </form>
+                }
+            </td>
+        </tr>
+    }
+</table>
